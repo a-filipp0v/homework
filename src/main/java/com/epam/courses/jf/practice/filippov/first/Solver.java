@@ -136,35 +136,6 @@ public class Solver implements ISolver {
     @Override
     public void task18() {
 
-//        Scanner scanner = new Scanner(System.in);
-//        final int matrixSize = Integer.parseInt(scanner.next());
-//        String[][] matrix = new String[matrixSize][matrixSize];
-//        for (int row = 0; row < matrixSize; ++row) {
-//            for (int col = 0; col < matrixSize; ++col) {
-//                matrix[row][col] = scanner.next();
-//            }
-//        }
-//
-//        int max = Integer.parseInt(matrix[0][0]);
-//        for (int i = matrixSize - 1; i >= 0; i--) {
-//            for (int j = matrixSize - 1; j >= 0; j--) {
-//                if (String.valueOf(max).equals(matrix[i][j])) {
-//                    for (int k = matrixSize - 1; k >= 0; k--) {
-//                        matrix[i][k] = "";
-//                        matrix[k][j] = "";
-//                    }
-//                }
-//            }
-//        }
-//
-//        for (int i = 0; i < matrixSize; i++) {
-//            for (int j = 0; j < matrixSize; j++) {
-//                if (!matrix[i][j].isEmpty())
-//                    System.out.print(matrix[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
-
         Scanner sc = new Scanner(System.in);
         int matrixSize = Integer.parseInt(sc.next());
         List<List<Integer>> matrix = new ArrayList<>();
@@ -181,7 +152,6 @@ public class Solver implements ISolver {
 
         ArrayList<Integer> deleteColumns = new ArrayList<>();
         ArrayList<Integer> deleteRows = new ArrayList<>();
-
         for (List<Integer> list : matrix) {
             if (list.contains(maxVal))
             {
@@ -198,7 +168,6 @@ public class Solver implements ISolver {
 
         deleteColumns.sort(Comparator.reverseOrder());
         deleteRows.sort(Comparator.reverseOrder());
-
         for (int index : deleteRows) {
             matrix.remove(index);
         }
@@ -208,6 +177,10 @@ public class Solver implements ISolver {
             }
         }
 
+        System.out.println(
+                (matrixSize - deleteColumns.size()) + "\n"
+                + (matrixSize - deleteRows.size())
+                );
         for (List<Integer> list : matrix) {
             for(Integer i : list) {
                 System.out.print(i + " ");
@@ -218,7 +191,7 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task4();
+        sv.task18();
 
     }
 }
