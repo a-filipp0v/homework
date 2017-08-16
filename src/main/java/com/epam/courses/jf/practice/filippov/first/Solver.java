@@ -178,8 +178,8 @@ public class Solver implements ISolver {
         }
 
         System.out.println(
-                (matrixSize - deleteColumns.size()) + "\n"
-                + (matrixSize - deleteRows.size())
+                (matrixSize - deleteRows.size()) + "\n"
+                + (matrixSize - deleteColumns.size())
                 );
         for (List<Integer> list : matrix) {
             for(Integer i : list) {
