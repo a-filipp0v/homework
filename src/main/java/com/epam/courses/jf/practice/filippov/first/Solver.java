@@ -22,15 +22,15 @@ public class Solver implements ISolver {
             lines[i] = sc.nextLine();
         }
         sc.close();
-        int minLength = 0;
-        int maxLength = 0;
-        String minString = null;
-        String maxString = null;
+        int minLength = lines[0].length();
+        int maxLength = lines[0].length();
+        String minString = lines[0];
+        String maxString = lines[0];
         for (String s : lines) {
             if (s.length() >= maxLength) {
                 maxLength = s.length();
                 maxString = s;
-            }
+            } else
             if (s.length() <= minLength) {
                 minLength = s.length();
                 minString = s;
@@ -89,6 +89,7 @@ public class Solver implements ISolver {
     @Override
     public void task4() {
         Scanner sc = new Scanner(System.in);
+        int numOfWords = Integer.parseInt(sc.nextLine());
         String[] lines = sc.nextLine().split(" ");
         String foundWord = lines[0];
         long amountOfUniqueSymbols = lines[0].chars().distinct().count();
@@ -99,12 +100,12 @@ public class Solver implements ISolver {
             }
         }
         System.out.println(foundWord);
-        System.out.println(amountOfUniqueSymbols);
     }
 
     @Override
     public void task5() {
         Scanner sc = new Scanner(System.in);
+        int numOfWords = Integer.parseInt(sc.nextLine());
         String[] inputLines = sc.nextLine().split(" ");
         String vowels = "aeiouyAEIOUY";
         int numOfFoundWords = 0;
@@ -216,7 +217,6 @@ public class Solver implements ISolver {
     }
 
     public static void main(String[] args) {
-        Solver sv = new Solver();
-        sv.task18();
+
     }
 }
