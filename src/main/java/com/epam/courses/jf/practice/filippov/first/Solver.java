@@ -21,7 +21,7 @@ public class Solver implements ISolver {
         for (int i = 0; i < lines.length; i++) {
             lines[i] = sc.nextLine();
         }
-        sc.close();
+
         int minLength = lines[0].length();
         int maxLength = lines[0].length();
         String minString = lines[0];
@@ -30,7 +30,7 @@ public class Solver implements ISolver {
             if (s.length() >= maxLength) {
                 maxLength = s.length();
                 maxString = s;
-            } else
+            }
             if (s.length() <= minLength) {
                 minLength = s.length();
                 minString = s;
@@ -94,7 +94,7 @@ public class Solver implements ISolver {
         String foundWord = lines[0];
         long amountOfUniqueSymbols = lines[0].chars().distinct().count();
         for (String s : lines) {
-            if (s.chars().distinct().count() <= amountOfUniqueSymbols) {
+            if (s.chars().distinct().count() < amountOfUniqueSymbols) {
                 amountOfUniqueSymbols = s.chars().distinct().count();
                 foundWord = s;
             }
@@ -217,6 +217,8 @@ public class Solver implements ISolver {
     }
 
     public static void main(String[] args) {
+        Solver sv = new Solver();
+        sv.task4();
 
     }
 }
