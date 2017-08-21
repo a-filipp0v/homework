@@ -133,6 +133,7 @@ public class Solver implements ISolver {
     @Override
     public void task6() {
         Scanner sc = new Scanner(System.in);
+        int numOfWords = Integer.parseInt(sc.nextLine());
         String[] inputLines = sc.nextLine().split(" ");
         String foundWord = inputLines[0];
         int counter = 0;
@@ -219,6 +220,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-
+        sv.task6();
     }
 }
