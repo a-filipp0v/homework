@@ -2,8 +2,8 @@ package com.epam.courses.jf.practice.filippov.first;
 
 import com.epam.courses.jf.practice.common.first.ISolver;
 
-import java.math.BigInteger;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Реализация первого блока заданий.
@@ -19,23 +19,18 @@ public class Solver implements ISolver {
         for (int i = 0; i < lines.length; i++) {
             lines[i] = sc.nextLine();
         }
-
-        int minLength = lines[0].length();
-        int maxLength = lines[0].length();
         String minString = lines[0];
         String maxString = lines[0];
         for (String s : lines) {
-            if (s.length() >= maxLength) {
-                maxLength = s.length();
+            if (s.length() >= maxString.length()) {
                 maxString = s;
             }
-            if (s.length() <= minLength) {
-                minLength = s.length();
+            if (s.length() <= minString.length()) {
                 minString = s;
             }
         }
-        System.out.printf("MIN (%d): \"%s\"%n", minLength, minString);
-        System.out.printf("MAX (%d): \"%s\"%n", maxLength, maxString);
+        System.out.printf("MIN (%d): \"%s\"%n", minString.length(), minString);
+        System.out.printf("MAX (%d): \"%s\"%n", maxString.length(), maxString);
     }
 
     @Override
@@ -60,7 +55,7 @@ public class Solver implements ISolver {
             lines[i] = sc.nextLine();
             sumOfLenghts += lines[i].length();
         }
-        int averageLength = (int) Math.floor(sumOfLenghts / lines.length);
+        int averageLength = sumOfLenghts / lines.length;
         System.out.printf("AVERAGE (%d)%n", averageLength);
         for (String s : lines) {
             if (s.length() < averageLength) {
@@ -132,9 +127,7 @@ public class Solver implements ISolver {
                 }
             }  else break;
         }
-        if (counter == 0) {
-            System.out.println("NOT FOUND");
-        } else System.out.println(foundWord);
+        System.out.println(counter==0 ? "NOT FOUND" : foundWord);
     }
 
     @Override
@@ -142,16 +135,9 @@ public class Solver implements ISolver {
         Scanner sc = new Scanner(System.in);
         Integer.parseInt(sc.nextLine());
         String[] inputLines = sc.nextLine().split(" ");
-//        String stringForPrint="";
-
-        for (String s : inputLines) {
-            if (s.length() == s.chars().distinct().count()) {
-
-            }
-        }
-//        if (stringForPrint.isEmpty()) {
-//            System.out.println("NOT FOUND");
-//        } else System.out.println(stringForPrint.replaceAll("\\s*$", ""));
+        System.out.println(Arrays.stream(inputLines)
+                                 .filter(string -> string.chars().distinct().count() == string.length())
+                                 .collect(Collectors.joining(" ")));
     }
 
     @Override
@@ -159,36 +145,22 @@ public class Solver implements ISolver {
         Scanner sc = new Scanner(System.in);
         Integer.parseInt(sc.nextLine());
         String[] inputLines = sc.nextLine().split(" ");
-        Long palindrome = null;
+        String palindrome = "";
         for (String s : inputLines) {
-            int countDigits = 0;
-            for (char c : s.toCharArray()) {
-                if (Character.isDigit(c)) countDigits++;
-            }
-            if (countDigits == s.length())  {
-                Long parsedNumber = Long.parseLong(s);
-                Long numForTest = parsedNumber;
-                long reverse = 0;
-                while (numForTest != 0){
-                    Long remainder = numForTest%10;
-                    reverse = reverse * 10 + remainder;
-                    numForTest = numForTest / 10;
-                }
-                if (parsedNumber.equals(reverse)) {
-                    palindrome = parsedNumber;
+            if (s.matches("^[0-9+]*$")) {
+                if (new StringBuilder(s).reverse().toString().equals(s)) {
+                    palindrome = s;
                 }
             }
         }
-        if (palindrome!=null) {
-            System.out.println(palindrome);
-        } else System.out.println("NOT FOUND");
+        System.out.println(palindrome.equals("") ? "NOT FOUND" : palindrome);
     }
 
     @Override
     public void task9() {
         int size = Integer.parseInt(new Scanner(System.in).nextLine());
         for (int i = 1; i <= size*size; i++) {
-            System.out.print(i%size==0 ? i + "\n" : i + "\t");
+            System.out.print(i + (i%size==0 ? "\n" : "\t"));
         }
     }
 
@@ -255,6 +227,5 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task7();
     }
 }
