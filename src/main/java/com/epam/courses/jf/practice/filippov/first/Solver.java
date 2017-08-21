@@ -1,11 +1,10 @@
 package com.epam.courses.jf.practice.filippov.first;
 
 import com.epam.courses.jf.practice.common.first.ISolver;
+import com.sun.istack.internal.NotNull;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.math.BigInteger;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -49,21 +48,7 @@ public class Solver implements ISolver {
         for (int i = 0; i < lines.length; i++) {
             lines[i] = sc.nextLine();
         }
-        for (int i = 0; i < lines.length; i++) {
-            for (int j = 0; j < lines.length - 1; j++) {
-                if (lines[j].length() > lines[j + 1].length()) {
-                    String temp = lines[j];
-                    lines[j] = lines[j + 1];
-                    lines[j + 1] = temp;
-                } else if (lines[j].length() == lines[j + 1].length()) {
-                    if (lines[j].compareTo(lines[j + 1]) >= 0) {
-                        String temp = lines[j];
-                        lines[j] = lines[j + 1];
-                        lines[j + 1] = temp;
-                    }
-                }
-            }
-        }
+        Arrays.sort(lines, Comparator.comparingInt(String::length));
         for (String st : lines) {
             System.out.printf("(%d): \"%s\"%n", st.length(), st);
         }
@@ -91,7 +76,7 @@ public class Solver implements ISolver {
     @Override
     public void task4() {
         Scanner sc = new Scanner(System.in);
-        int numOfWords = Integer.parseInt(sc.nextLine());
+        Integer.parseInt(sc.nextLine());
         String[] lines = sc.nextLine().split(" ");
         String foundWord = lines[0];
         long amountOfUniqueSymbols = lines[0].chars().distinct().count();
@@ -107,7 +92,7 @@ public class Solver implements ISolver {
     @Override
     public void task5() {
         Scanner sc = new Scanner(System.in);
-        int numOfWords = Integer.parseInt(sc.nextLine());
+        Integer.parseInt(sc.nextLine());
         String[] inputLines = sc.nextLine().split(" ");
         String vowels = "aeiouyAEIOUY";
         int numOfFoundWords = 0;
@@ -133,7 +118,7 @@ public class Solver implements ISolver {
     @Override
     public void task6() {
         Scanner sc = new Scanner(System.in);
-        int numOfWords = Integer.parseInt(sc.nextLine());
+        Integer.parseInt(sc.nextLine());
         String[] inputLines = sc.nextLine().split(" ");
         String foundWord = inputLines[0];
         int counter = 0;
@@ -150,16 +135,65 @@ public class Solver implements ISolver {
                 }
             }  else break;
         }
-        System.out.println(foundWord);
+        if (counter == 0) {
+            System.out.println("NOT FOUND");
+        } else System.out.println(foundWord);
+    }
+
+    @Override
+    public void task7() {
+        Scanner sc = new Scanner(System.in);
+        Integer.parseInt(sc.nextLine());
+        String[] inputLines = sc.nextLine().split(" ");
+        for (String s : inputLines) {
+            if (s.length() == s.chars().distinct().count()) {
+                System.out.print(s + " ");
+            }
+        }
+
+    }
+
+    @Override
+    public void task8() {
+        Scanner sc = new Scanner(System.in);
+        Integer.parseInt(sc.nextLine());
+        String[] inputLines = sc.nextLine().split(" ");
+        BigInteger palindrome = null;
+        for (String s : inputLines) {
+            int countDigits = 0;
+            for (char c : s.toCharArray()) {
+                if (Character.isDigit(c)) countDigits++;
+            }
+            if (countDigits == s.length())  {
+                int parsedNumber = Integer.parseInt(s);
+                int numForTest = parsedNumber;
+                int reverse = 0;
+                while (numForTest != 0){
+                    int remainder = numForTest%10;
+                    reverse = reverse * 10 + remainder;
+                    numForTest = numForTest / 10;
+                }
+                if (parsedNumber == reverse) {
+                    palindrome = BigInteger.valueOf(parsedNumber);
+                }
+            }
+        }
+        if (palindrome!=null) {
+            System.out.println(palindrome);
+        } else System.out.println("NOT FOUND");
     }
 
     @Override
     public void task9() {
-        final int N = Integer.parseInt(new Scanner(System.in).nextLine());
-        System.out.println(IntStream.range(1, N * N + 1)
-                .mapToObj(i -> i + (i % N == 0 ? "\n" : "\t"))
-                .collect(Collectors.joining())
-        );
+        int size = Integer.parseInt(new Scanner(System.in).nextLine());
+        for (int i = 1; i <= size*size; i++) {
+            System.out.print(i%size==0 ? i + "\n" : i + "\t");
+        }
+    }
+
+    @Override
+    public void task10() {
+
     }
 
     @Override
@@ -220,6 +254,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task6();
+        sv.task9();
     }
 }
