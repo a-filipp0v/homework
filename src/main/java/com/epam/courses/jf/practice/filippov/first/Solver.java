@@ -142,12 +142,13 @@ public class Solver implements ISolver {
         Scanner sc = new Scanner(System.in);
         Integer.parseInt(sc.nextLine());
         String[] inputLines = sc.nextLine().split(" ");
+        String stringForPrint ="";
         for (String s : inputLines) {
             if (s.length() == s.chars().distinct().count()) {
-                System.out.print(s + " ");
+                stringForPrint+=s+ " ";
             }
         }
-
+        System.out.println(stringForPrint.replaceAll("\\s*$", ""));
     }
 
     @Override
@@ -155,23 +156,23 @@ public class Solver implements ISolver {
         Scanner sc = new Scanner(System.in);
         Integer.parseInt(sc.nextLine());
         String[] inputLines = sc.nextLine().split(" ");
-        BigInteger palindrome = null;
+        Long palindrome = null;
         for (String s : inputLines) {
             int countDigits = 0;
             for (char c : s.toCharArray()) {
                 if (Character.isDigit(c)) countDigits++;
             }
             if (countDigits == s.length())  {
-                int parsedNumber = Integer.parseInt(s);
-                int numForTest = parsedNumber;
-                int reverse = 0;
+                Long parsedNumber = Long.parseLong(s);
+                Long numForTest = parsedNumber;
+                long reverse = 0;
                 while (numForTest != 0){
-                    int remainder = numForTest%10;
+                    Long remainder = numForTest%10;
                     reverse = reverse * 10 + remainder;
                     numForTest = numForTest / 10;
                 }
-                if (parsedNumber == reverse) {
-                    palindrome = BigInteger.valueOf(parsedNumber);
+                if (parsedNumber.equals(reverse)) {
+                    palindrome = parsedNumber;
                 }
             }
         }
@@ -250,5 +251,7 @@ public class Solver implements ISolver {
     }
 
     public static void main(String[] args) {
+        Solver sv = new Solver();
+        sv.task7();
     }
 }
