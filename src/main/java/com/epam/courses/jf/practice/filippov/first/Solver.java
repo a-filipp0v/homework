@@ -134,6 +134,15 @@ public class Solver implements ISolver {
     }
 
     @Override
+    public void task9() {
+        final int N = Integer.parseInt(new Scanner(System.in).nextLine());
+        System.out.println(IntStream.range(1, N * N + 1)
+                .mapToObj(i -> i + (i % N == 0 ? "\n" : "\t"))
+                .collect(Collectors.joining())
+        );
+    }
+
+    @Override
     public void task18() {
 
         Scanner sc = new Scanner(System.in);
