@@ -166,7 +166,6 @@ public class Solver implements ISolver {
 
     @Override
     public void task10() {
-
     }
 
     @Override
