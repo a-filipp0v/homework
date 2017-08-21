@@ -142,15 +142,16 @@ public class Solver implements ISolver {
         Scanner sc = new Scanner(System.in);
         Integer.parseInt(sc.nextLine());
         String[] inputLines = sc.nextLine().split(" ");
-        String stringForPrint="";
+//        String stringForPrint="";
+
         for (String s : inputLines) {
             if (s.length() == s.chars().distinct().count()) {
-                stringForPrint+=s+ " ";
+
             }
         }
-        if (stringForPrint.isEmpty()) {
-            System.out.println("NOT FOUND");
-        } else System.out.println(stringForPrint.replaceAll("\\s*$", ""));
+//        if (stringForPrint.isEmpty()) {
+//            System.out.println("NOT FOUND");
+//        } else System.out.println(stringForPrint.replaceAll("\\s*$", ""));
     }
 
     @Override
@@ -254,6 +255,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task2();
+        sv.task7();
     }
 }
