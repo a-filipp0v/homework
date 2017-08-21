@@ -1,12 +1,9 @@
 package com.epam.courses.jf.practice.filippov.first;
 
 import com.epam.courses.jf.practice.common.first.ISolver;
-import com.sun.istack.internal.NotNull;
 
 import java.math.BigInteger;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Реализация первого блока заданий.
@@ -253,7 +250,5 @@ public class Solver implements ISolver {
     }
 
     public static void main(String[] args) {
-        Solver sv = new Solver();
-        sv.task9();
     }
 }
