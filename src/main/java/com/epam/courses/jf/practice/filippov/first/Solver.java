@@ -130,7 +130,24 @@ public class Solver implements ISolver {
 
     @Override
     public void task6() {
-
+        Scanner sc = new Scanner(System.in);
+        String[] inputLines = sc.nextLine().split(" ");
+        String foundWord = inputLines[0];
+        int counter = 0;
+        for (String s : inputLines) {
+            if (counter == 0) {
+                for (int i = 0; i < s.length() - 1; ) {
+                    if (s.charAt(i) < s.charAt(i + 1)) {
+                        i++;
+                        if (i == s.length() - 1) {
+                            counter = 1;
+                            foundWord = s;
+                        }
+                    } else break;
+                }
+            }  else break;
+        }
+        System.out.println(foundWord);
     }
 
     @Override
