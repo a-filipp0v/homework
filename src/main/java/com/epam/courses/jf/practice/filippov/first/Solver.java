@@ -171,7 +171,6 @@ public class Solver implements ISolver {
 
     @Override
     public void task18() {
-
         Scanner sc = new Scanner(System.in);
         int matrixSize = Integer.parseInt(sc.next());
         List<List<Integer>> matrix = new ArrayList<>();
