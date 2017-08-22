@@ -270,7 +270,6 @@ public class Solver implements ISolver {
         }
         return newList;
     }
-
     private List<List<String>> moveMatrixUp(List<List<String>> list, int step) {
         List<List<String>> newList = new ArrayList<>();
         for (int i = Math.abs(step); i < list.size(); i++) {
@@ -288,8 +287,8 @@ public class Solver implements ISolver {
         int index = Integer.parseInt(sc.nextLine());
         List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
 
+        System.out.println(list.size());
         if (Math.abs(index%list.size()) == 0 || index == 0) {
-            System.out.println(list.size());
             printListMatrix(list);
         } else {
             int step = Math.abs(index) < list.size() ? index : index%list.size();
