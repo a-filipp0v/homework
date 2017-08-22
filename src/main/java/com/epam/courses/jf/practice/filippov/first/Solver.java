@@ -298,8 +298,8 @@ public class Solver implements ISolver {
             } if (step < 0) {
                 list = moveMatrixUp(list, step);
             }
+            printListMatrix(list);
         }
-        printListMatrix(list);
     }
 
     @Override
