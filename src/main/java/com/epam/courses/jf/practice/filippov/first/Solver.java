@@ -236,8 +236,8 @@ public class Solver implements ISolver {
     }
     private void printListMatrix(List<List<String>> list) {
         for (List<String> strings : list) {
-            System.out.println(strings.stream()
-                    .collect(Collectors.joining("\t")));
+            System.out.print(strings.stream()
+                    .collect(Collectors.joining(" ")));
             System.out.print("\n");
         }
     }
