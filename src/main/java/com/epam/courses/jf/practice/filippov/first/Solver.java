@@ -359,6 +359,5 @@ public class Solver implements ISolver {
     public static void main(String[] args) {
         Solver sv = new Solver();
         sv.task13();
-
     }
 }
