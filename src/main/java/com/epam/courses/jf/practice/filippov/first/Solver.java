@@ -2,8 +2,10 @@ package com.epam.courses.jf.practice.filippov.first;
 
 import com.epam.courses.jf.practice.common.first.ISolver;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Реализация первого блока заданий.
@@ -11,7 +13,7 @@ import java.util.stream.Collectors;
 public class Solver implements ISolver {
 
     // TODO выполнение задания
-    private String[] createArrayOfString() {
+    private String[] createArrayOfStringLines() {
         Scanner sc = new Scanner(System.in);
         String[] lines = new String[Integer.parseInt(sc.nextLine())];
         for (int i = 0; i < lines.length; i++) {
@@ -19,9 +21,10 @@ public class Solver implements ISolver {
         }
         return lines;
     }
+
     @Override
     public void task1() {
-        String[] lines = createArrayOfString();
+        String[] lines = createArrayOfStringLines();
         String minString = lines[0];
         String maxString = lines[0];
         for (String s : lines) {
@@ -38,7 +41,7 @@ public class Solver implements ISolver {
 
     @Override
     public void task2() {
-        String[] lines = createArrayOfString();
+        String[] lines = createArrayOfStringLines();
         Arrays.sort(lines, Comparator.comparingInt(String::length).thenComparing(String::compareTo));
         for (String st : lines) {
             System.out.printf("(%d): \"%s\"%n", st.length(), st);
@@ -135,6 +138,7 @@ public class Solver implements ISolver {
         String[] inputLines = sc.nextLine().split(" ");
         String foundWord = Arrays.stream(inputLines)
                                  .filter(string -> string.chars().distinct().count() == string.length())
+                                 .distinct()
                                  .collect(Collectors.joining(" "));
         System.out.println(foundWord.isEmpty() ? "NOT FOUND" : foundWord);
     }
@@ -163,6 +167,24 @@ public class Solver implements ISolver {
 
     @Override
     public void task10() {
+        String[] st = new Scanner(System.in).nextLine().split(" ");
+        double a = Double.parseDouble(st[0]);
+        double b = Double.parseDouble(st[1]);
+        double c = Double.parseDouble(st[2]);
+        double discriminant = b * b - 4 * a * c;
+
+        if (discriminant > 0) {
+            BigDecimal x1 = BigDecimal.valueOf((-b - Math.sqrt(discriminant)) / (2 * a)).setScale(2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal x2 = BigDecimal.valueOf((-b + Math.sqrt(discriminant)) / (2 * a)).setScale(2, BigDecimal.ROUND_HALF_UP);
+            System.out.println("Two solutions: " + x1 + ", " + x2);
+        }
+        else if (discriminant == 0) {
+            BigDecimal x = BigDecimal.valueOf(-b / (2 * a)).setScale(2, BigDecimal.ROUND_HALF_UP);
+            System.out.println("One solution: " + x);
+        }
+        else {
+            System.out.println("No solution");
+        }
     }
 
     @Override
@@ -222,6 +244,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task1();
+        sv.task10();
     }
 }
