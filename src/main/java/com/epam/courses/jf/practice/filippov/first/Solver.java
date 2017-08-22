@@ -3,7 +3,9 @@ package com.epam.courses.jf.practice.filippov.first;
 import com.epam.courses.jf.practice.common.first.ISolver;
 
 import java.math.BigDecimal;
+import java.time.Month;
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -188,6 +190,72 @@ public class Solver implements ISolver {
     }
 
     @Override
+    public void task11() {
+        try {
+            int val = Integer.parseInt(new Scanner(System.in).nextLine());
+            if (val>0 && val<=12) {
+                switch(val) {
+                    case 1: System.out.println(Month.of(val).name());
+                        break;
+                    case 2: System.out.println(Month.of(val).name());
+                        break;
+                    case 3: System.out.println(Month.of(val).name());
+                        break;
+                    case 4: System.out.println(Month.of(val).name());
+                        break;
+                    case 5: System.out.println(Month.of(val).name());
+                        break;
+                    case 6: System.out.println(Month.of(val).name());
+                        break;
+                    case 7: System.out.println(Month.of(val).name());
+                        break;
+                    case 8: System.out.println(Month.of(val).name());
+                        break;
+                    case 9: System.out.println(Month.of(val).name());
+                        break;
+                    case 10: System.out.println(Month.of(val).name());
+                        break;
+                    case 11: System.out.println(Month.of(val).name());
+                        break;
+                    case 12: System.out.println(Month.of(val).name());
+                }
+            } else System.out.println("INCORRECT INPUT DATA");
+        } catch (NumberFormatException e) {
+            System.out.println("INCORRECT INPUT DATA");
+        }
+    }
+
+    @Override
+    public void task12() {
+        Scanner sc = new Scanner(System.in);
+        Integer index = Integer.parseInt(sc.nextLine());
+        Integer size = Integer.parseInt(sc.nextLine());
+        List<List<String>> list = new ArrayList<>();
+
+        for (int rows = 0; rows < size; rows++) {
+            list.add(new ArrayList<>());
+            for (int cols = 0; cols < size; cols++) {
+                list.get(rows).add(cols, sc.next());
+            }
+        }
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size-1-i; j++) {
+                if (Integer.parseInt(list.get(j).get(index)) > Integer.parseInt(list.get(j+1).get(index))) {
+                    List<String> tempList = list.get(j);
+                    list.set(j, list.get(j+1));
+                    list.set(j+1, tempList);
+                }
+            }
+        }
+        System.out.println(size);
+        for (List<String> strings : list) {
+            System.out.println(strings.stream()
+                    .collect(Collectors.joining("\t")));
+            System.out.println();
+        }
+    }
+
+    @Override
     public void task18() {
         Scanner sc = new Scanner(System.in);
         int matrixSize = Integer.parseInt(sc.next());
@@ -244,6 +312,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task10();
+        sv.task12();
     }
 }
