@@ -5,9 +5,7 @@ import com.epam.courses.jf.practice.common.first.ISolver;
 import java.math.BigDecimal;
 import java.time.Month;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Реализация первого блока заданий.
@@ -226,11 +224,7 @@ public class Solver implements ISolver {
         }
     }
 
-    @Override
-    public void task12() {
-        Scanner sc = new Scanner(System.in);
-        Integer index = Integer.parseInt(sc.nextLine());
-        Integer size = Integer.parseInt(sc.nextLine());
+    private List<List<String>> createAndFillListMatrix(Scanner sc, int size) {
         List<List<String>> list = new ArrayList<>();
         for (int rows = 0; rows < size; rows++) {
             list.add(new ArrayList<>());
@@ -238,8 +232,23 @@ public class Solver implements ISolver {
                 list.get(rows).add(cols, sc.next());
             }
         }
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size-1-i; j++) {
+        return list;
+    }
+    private void printListMatrix(List<List<String>> list) {
+        for (List<String> strings : list) {
+            System.out.println(strings.stream()
+                    .collect(Collectors.joining("\t")));
+            System.out.print("\n");
+        }
+    }
+
+    @Override
+    public void task12() {
+        Scanner sc = new Scanner(System.in);
+        int index = Integer.parseInt(sc.nextLine());
+        List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.size()-1-i; j++) {
                 if (Integer.parseInt(list.get(j).get(index)) > Integer.parseInt(list.get(j+1).get(index))) {
                     List<String> tempList = list.get(j);
                     list.set(j, list.get(j+1));
@@ -247,17 +256,50 @@ public class Solver implements ISolver {
                 }
             }
         }
-        System.out.println(size);
-        for (List<String> strings : list) {
-            System.out.println(strings.stream()
-                    .collect(Collectors.joining("\t")));
-            System.out.println();
+        System.out.println(list.size());
+        printListMatrix(list);
+    }
+
+    private List<List<String>> moveMatrixDown(List<List<String>> list, int step) {
+        List<List<String >> newList = new ArrayList<>();
+        for (int i = list.size()-step; i < list.size(); i++) {
+            newList.add(list.get(i));
         }
+        for (int i = 0; i < list.size() - step; i++) {
+            newList.add(list.get(i));
+        }
+        return newList;
+    }
+
+    private List<List<String>> moveMatrixUp(List<List<String>> list, int step) {
+        List<List<String>> newList = new ArrayList<>();
+        for (int i = Math.abs(step); i < list.size(); i++) {
+            newList.add(list.get(i));
+        }
+        for (int i = 0; i < Math.abs(step); i++) {
+            newList.add(list.get(i));
+        }
+        return newList;
     }
 
     @Override
     public void task13() {
+        Scanner sc = new Scanner(System.in);
+        int index = Integer.parseInt(sc.nextLine());
+        List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
 
+        if (Math.abs(index%list.size()) == 0 || index == 0) {
+            System.out.println(list.size());
+            printListMatrix(list);
+        } else {
+            int step = Math.abs(index) < list.size() ? index : index%list.size();
+            if (step > 0) {
+                list = moveMatrixDown(list, step);
+            } if (step < 0) {
+                list = moveMatrixUp(list, step);
+            }
+        }
+        printListMatrix(list);
     }
 
     @Override
@@ -317,6 +359,7 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task12();
+        sv.task13();
+
     }
 }
