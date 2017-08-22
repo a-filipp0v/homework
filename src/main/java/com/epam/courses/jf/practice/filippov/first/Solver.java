@@ -232,7 +232,6 @@ public class Solver implements ISolver {
         Integer index = Integer.parseInt(sc.nextLine());
         Integer size = Integer.parseInt(sc.nextLine());
         List<List<String>> list = new ArrayList<>();
-
         for (int rows = 0; rows < size; rows++) {
             list.add(new ArrayList<>());
             for (int cols = 0; cols < size; cols++) {
@@ -254,6 +253,11 @@ public class Solver implements ISolver {
                     .collect(Collectors.joining("\t")));
             System.out.println();
         }
+    }
+
+    @Override
+    public void task13() {
+
     }
 
     @Override
