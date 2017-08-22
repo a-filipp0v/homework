@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 public class Solver implements ISolver {
 
     // TODO выполнение задания
+
     private String[] createArrayOfStringLines() {
         Scanner sc = new Scanner(System.in);
         String[] lines = new String[Integer.parseInt(sc.nextLine())];
