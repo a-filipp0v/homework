@@ -11,14 +11,17 @@ import java.util.stream.Collectors;
 public class Solver implements ISolver {
 
     // TODO выполнение задания
-
-    @Override
-    public void task1() {
+    private String[] createArrayOfString() {
         Scanner sc = new Scanner(System.in);
         String[] lines = new String[Integer.parseInt(sc.nextLine())];
         for (int i = 0; i < lines.length; i++) {
             lines[i] = sc.nextLine();
         }
+        return lines;
+    }
+    @Override
+    public void task1() {
+        String[] lines = createArrayOfString();
         String minString = lines[0];
         String maxString = lines[0];
         for (String s : lines) {
@@ -35,11 +38,7 @@ public class Solver implements ISolver {
 
     @Override
     public void task2() {
-        Scanner sc = new Scanner(System.in);
-        String[] lines = new String[Integer.parseInt(sc.nextLine())];
-        for (int i = 0; i < lines.length; i++) {
-            lines[i] = sc.nextLine();
-        }
+        String[] lines = createArrayOfString();
         Arrays.sort(lines, Comparator.comparingInt(String::length).thenComparing(String::compareTo));
         for (String st : lines) {
             System.out.printf("(%d): \"%s\"%n", st.length(), st);
@@ -62,7 +61,6 @@ public class Solver implements ISolver {
                 System.out.printf("(%d): \"%s\"%n", s.length(), s);
             }
         }
-
     }
 
     @Override
@@ -135,9 +133,10 @@ public class Solver implements ISolver {
         Scanner sc = new Scanner(System.in);
         Integer.parseInt(sc.nextLine());
         String[] inputLines = sc.nextLine().split(" ");
-        System.out.println(Arrays.stream(inputLines)
+        String foundWord = Arrays.stream(inputLines)
                                  .filter(string -> string.chars().distinct().count() == string.length())
-                                 .collect(Collectors.joining(" ")));
+                                 .collect(Collectors.joining(" "));
+        System.out.println(foundWord.isEmpty() ? "NOT FOUND" : foundWord);
     }
 
     @Override
@@ -147,10 +146,8 @@ public class Solver implements ISolver {
         String[] inputLines = sc.nextLine().split(" ");
         String palindrome = "";
         for (String s : inputLines) {
-            if (s.matches("^[0-9+]*$")) {
-                if (new StringBuilder(s).reverse().toString().equals(s)) {
+            if (s.matches("^[0-9+]*$") && new StringBuilder(s).reverse().toString().equals(s)) {
                     palindrome = s;
-                }
             }
         }
         System.out.println(palindrome.equals("") ? "NOT FOUND" : palindrome);
@@ -225,5 +222,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
+        sv.task1();
     }
 }
