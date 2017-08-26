@@ -509,12 +509,7 @@ public class Solver implements ISolver {
                 (initialListSize - deletionRows.size()) + "\n"
                         + (initialListSize - deletionCols.size())
         );
-        for (List<String> strs : list) {
-            for(String i : strs) {
-                System.out.print(i + " ");
-            }
-            System.out.println();
-        }
+        printListMatrix(list);
     }
 
     public static void main(String[] args) {
