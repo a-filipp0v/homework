@@ -349,7 +349,13 @@ public class Solver implements ISolver {
     }
 
     private List<List<String>> rotateMatrix(List<List<String>> list) {
-        List<List<String>> rotatedList = list;
+        List<List<String>> rotatedList = new ArrayList<>();
+        for (int rows = 0; rows < list.size(); rows++) {
+            rotatedList.add(new ArrayList<>());
+            for (int cols = 0; cols < list.size(); cols++) {
+                rotatedList.get(rows).add(cols, "0");
+            }
+        }
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < list.size(); j++) {
                 rotatedList.get(i).set(j, list.get(j).get(list.size()-1-i));
@@ -461,6 +467,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task17();
+        sv.task16();
     }
 }
