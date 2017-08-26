@@ -348,15 +348,60 @@ public class Solver implements ISolver {
 
     }
 
-    private void rotateMatrix() {
-
+    private List<List<String>> rotateMatrix(List<List<String>> list) {
+        List<List<String>> rotatedList = list;
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.size(); j++) {
+                rotatedList.get(i).set(j, list.get(j).get(list.size()-1-i));
+            }
+        }
+        return rotatedList;
     }
 
     @Override
     public void task16() {
         Scanner sc = new Scanner(System.in);
         List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
+        System.out.println(list.size());
+        printListMatrix(rotateMatrix(list));
+    }
 
+    private int findDet(List<List<String>> list) {
+        int det = 0;
+        int sign;
+        if (list.size() == 1) {
+            return Integer.parseInt(list.get(0).get(0));
+        }
+        for (int i = 0; i < list.size(); i++) {
+            List<List<String>> tempList = new ArrayList<>();
+            for (int rows = 0; rows < list.size()-1; rows++) {
+                tempList.add(new ArrayList<>());
+                for (int cols = 0; cols < list.size()-1; cols++) {
+                    tempList.get(rows).add(cols, "0");
+                }
+            }
+            for (int a = 1; a < list.size(); a++) {
+                for (int b = 0; b < list.size(); b++) {
+                    if (b < i) {
+                        tempList.get(a-1).set(b, list.get(a).get(b));
+                    } else if (b > i) {
+                        tempList.get(a-1).set(b-1, list.get(a).get(b));
+                    }
+                }
+            }
+            if (i%2==0) {
+                sign=1;
+            } else sign =-1;
+            det+=sign*Integer.parseInt(list.get(0).get(i)) * (findDet(tempList));
+        }
+        return det;
+    }
+
+    @Override
+    public void task17() {
+        Scanner sc = new Scanner(System.in);
+        List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
+        System.out.println(findDet(list));
     }
 
     @Override
@@ -416,6 +461,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task15();
+        sv.task17();
     }
 }
