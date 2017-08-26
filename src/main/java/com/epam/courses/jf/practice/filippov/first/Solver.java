@@ -302,7 +302,7 @@ public class Solver implements ISolver {
         }
     }
 
-    private void findIncrSeq(int[] arr) {
+    private void findIncreasingSeq(int[] arr) {
         int length = 0;
         int tempLenght = 0;
         for (int i = 0; i < arr.length-1; i++) {
@@ -311,14 +311,16 @@ public class Solver implements ISolver {
                 length = tempLenght;
             } else tempLenght = 0;
         }
-        System.out.println(length+1);
+        if (length>1) {
+            System.out.println(length + 1);
+        } else System.out.println(0);
     }
 
     @Override
     public void task14() {
         String[] lines = createArrayOfWords();
         int[] ints = Arrays.stream(lines).mapToInt(Integer::parseInt).toArray();
-        findIncrSeq(ints);
+        findIncreasingSeq(ints);
     }
 
     @Override
@@ -327,14 +329,33 @@ public class Solver implements ISolver {
         List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
         int sumOfElements = 0;
         for (List<String> strings : list) {
-            for (int j = 0; j < strings.size()-2; j++) {
-                if (Integer.parseInt(strings.get(j)) > 0 && Integer.parseInt(strings.get(j+2)) > 0) {
-                    sumOfElements+=Integer.parseInt(strings.get(j+1));
+            int firstPositiveIndex = -1;
+            int secondPositiveIndex = -1;
+            for (int i = 0; i < strings.size(); i++) {
+                if (Integer.parseInt(strings.get(i)) > 0 && firstPositiveIndex >-1) {
+                    secondPositiveIndex = i;
                     break;
                 }
+                if (Integer.parseInt(strings.get(i)) > 0) {
+                    firstPositiveIndex = i;
+                }
+            }
+            for (int j = firstPositiveIndex+1; j < secondPositiveIndex; j++) {
+                sumOfElements+=Integer.parseInt(strings.get(j));
             }
         }
         System.out.println(sumOfElements);
+
+    }
+
+    private void rotateMatrix() {
+
+    }
+
+    @Override
+    public void task16() {
+        Scanner sc = new Scanner(System.in);
+        List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
 
     }
 
