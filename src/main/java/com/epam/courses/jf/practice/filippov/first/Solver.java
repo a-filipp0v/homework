@@ -14,7 +14,7 @@ public class Solver implements ISolver {
 
     // TODO выполнение задания
 
-    private String[] createArrayOfStringLines() {
+    private String[] createArrayOfLines() {
         Scanner sc = new Scanner(System.in);
         String[] lines = new String[Integer.parseInt(sc.nextLine())];
         for (int i = 0; i < lines.length; i++) {
@@ -22,10 +22,15 @@ public class Solver implements ISolver {
         }
         return lines;
     }
+    private String[] createArrayOfWords() {
+        Scanner sc = new Scanner(System.in);
+        Integer.parseInt(sc.nextLine());
+        return sc.nextLine().split(" ");
+    }
 
     @Override
     public void task1() {
-        String[] lines = createArrayOfStringLines();
+        String[] lines = createArrayOfLines();
         String minString = lines[0];
         String maxString = lines[0];
         for (String s : lines) {
@@ -42,7 +47,7 @@ public class Solver implements ISolver {
 
     @Override
     public void task2() {
-        String[] lines = createArrayOfStringLines();
+        String[] lines = createArrayOfLines();
         Arrays.sort(lines, Comparator.comparingInt(String::length).thenComparing(String::compareTo));
         for (String st : lines) {
             System.out.printf("(%d): \"%s\"%n", st.length(), st);
@@ -69,9 +74,7 @@ public class Solver implements ISolver {
 
     @Override
     public void task4() {
-        Scanner sc = new Scanner(System.in);
-        Integer.parseInt(sc.nextLine());
-        String[] lines = sc.nextLine().split(" ");
+        String[] lines = createArrayOfWords();
         String foundWord = lines[0];
         long amountOfUniqueSymbols = lines[0].chars().distinct().count();
         for (String s : lines) {
@@ -85,9 +88,7 @@ public class Solver implements ISolver {
 
     @Override
     public void task5() {
-        Scanner sc = new Scanner(System.in);
-        Integer.parseInt(sc.nextLine());
-        String[] inputLines = sc.nextLine().split(" ");
+        String[] inputLines = createArrayOfWords();
         String vowels = "aeiouyAEIOUY";
         int numOfFoundWords = 0;
         for (String s : inputLines) {
@@ -301,6 +302,42 @@ public class Solver implements ISolver {
         }
     }
 
+    private void findIncrSeq(int[] arr) {
+        int length = 0;
+        int tempLenght = 0;
+        for (int i = 0; i < arr.length-1; i++) {
+            if (arr[i] < arr[i+1]) {
+                tempLenght++;
+                length = tempLenght;
+            } else tempLenght = 0;
+        }
+        System.out.println(length+1);
+    }
+
+    @Override
+    public void task14() {
+        String[] lines = createArrayOfWords();
+        int[] ints = Arrays.stream(lines).mapToInt(Integer::parseInt).toArray();
+        findIncrSeq(ints);
+    }
+
+    @Override
+    public void task15() {
+        Scanner sc = new Scanner(System.in);
+        List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
+        int sumOfElements = 0;
+        for (List<String> strings : list) {
+            for (int j = 0; j < strings.size()-2; j++) {
+                if (Integer.parseInt(strings.get(j)) > 0 && Integer.parseInt(strings.get(j+2)) > 0) {
+                    sumOfElements+=Integer.parseInt(strings.get(j+1));
+                    break;
+                }
+            }
+        }
+        System.out.println(sumOfElements);
+
+    }
+
     @Override
     public void task18() {
         Scanner sc = new Scanner(System.in);
@@ -358,6 +395,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task13();
+        sv.task15();
     }
 }
