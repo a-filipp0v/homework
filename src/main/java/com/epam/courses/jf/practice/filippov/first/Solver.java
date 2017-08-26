@@ -465,8 +465,60 @@ public class Solver implements ISolver {
         }
     }
 
+    @Override
+    public void task19() {
+        Scanner sc = new Scanner(System.in);
+        List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
+        int initialListSize = list.size();
+        List<Integer> deletionRows = new ArrayList<>();
+        List<Integer> deletionCols = new ArrayList<>();
+        for (List<String> strs : list) {
+            int temp = 0;
+            for (String s : strs) {
+                if (Integer.parseInt(s) == 0) {
+                    temp++;
+                }
+            }
+            if (strs.size() == temp) {
+                deletionRows.add(list.indexOf(strs));
+            }
+        }
+        for (int i = 0; i < list.size(); i++) {
+            int temp = 0;
+            for (List<String> ls : list) {
+                if (Integer.parseInt(ls.get(i)) == 0) {
+                    temp++;
+                }
+            }
+            if (list.size() == temp) {
+                deletionCols.add(i);
+            }
+        }
+        deletionCols.sort(Comparator.reverseOrder());
+        deletionRows.sort(Comparator.reverseOrder());
+        for (int index : deletionRows) {
+            list.remove(index);
+        }
+        for (List<String> strs : list) {
+            for (int index : deletionCols) {
+                strs.remove(index);
+            }
+        }
+
+        System.out.println(
+                (initialListSize - deletionRows.size()) + "\n"
+                        + (initialListSize - deletionCols.size())
+        );
+        for (List<String> strs : list) {
+            for(String i : strs) {
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
+    }
+
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task16();
+        sv.task19();
     }
 }
