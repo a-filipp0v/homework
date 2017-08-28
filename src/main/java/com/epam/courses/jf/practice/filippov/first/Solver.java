@@ -564,6 +564,7 @@ public class Solver implements ISolver {
     public void task22() {
         Scanner sc = new Scanner(System.in);
         List<List<Double>> list = matrixAsDoubleList(sc, Integer.parseInt(sc.nextLine()));
+        System.out.println(list.size());
         for (List<Double> doubles : list) {
             System.out.println(doubles.stream()
                                       .map(Math::round)
@@ -578,20 +579,23 @@ public class Solver implements ISolver {
         List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
         int saddlePoints = 0;
         for (List<Integer> listOfIntegers : list) {
-            final int minValueInARow = listOfIntegers.stream().min((a, b) -> a < b ? a : b).get();
-            int index = listOfIntegers.indexOf(minValueInARow);
-            for (List<Integer> innerForeachList : list) {
-                if (innerForeachList.get(index) > minValueInARow) {
-                    break;
+            final int minValueInARow = listOfIntegers.stream().min((a, b) -> a <= b ? a : b).get();
+            for (int i = 0; i < list.size(); i++) {
+                boolean flag = false;
+                for (List<Integer> innerIntegers : list) {
+                    if (innerIntegers.get(i) > minValueInARow) {
+                        flag = true;
+                        break;
+                    }
                 }
+                if (!flag) saddlePoints++;
             }
-            saddlePoints+=1;
         }
         System.out.println(saddlePoints);
     }
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task23();
+        sv.task22();
     }
 }
