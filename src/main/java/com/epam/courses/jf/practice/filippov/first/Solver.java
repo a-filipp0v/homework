@@ -225,7 +225,17 @@ public class Solver implements ISolver {
         }
     }
 
-    private List<List<String>> createAndFillListMatrix(Scanner sc, int size) {
+    private List<List<Double>> matrixAsDoubleList(Scanner sc, int size) {
+        List<List<Double>> list = new ArrayList<>();
+        for (int rows = 0; rows < size; rows++) {
+            list.add(new ArrayList<>());
+            for (int cols = 0; cols < size; cols++) {
+                list.get(rows).add(cols, sc.nextDouble());
+            }
+        }
+        return list;
+    }
+    private List<List<String>> matrixAsStringList(Scanner sc, int size) {
         List<List<String>> list = new ArrayList<>();
         for (int rows = 0; rows < size; rows++) {
             list.add(new ArrayList<>());
@@ -235,11 +245,20 @@ public class Solver implements ISolver {
         }
         return list;
     }
+    private List<List<Integer>> matrixAsIntegerList(Scanner sc, int size) {
+        List<List<Integer>> list = new ArrayList<>();
+        for (int rows = 0; rows < size; rows++) {
+            list.add(new ArrayList<>());
+            for (int cols = 0; cols < size; cols++) {
+                list.get(rows).add(cols, Integer.parseInt(sc.next()));
+            }
+        }
+        return list;
+    }
     private void printListMatrix(List<List<String>> list) {
         for (List<String> strings : list) {
-            System.out.print(strings.stream()
-                    .collect(Collectors.joining(" ")));
-            System.out.print("\n");
+            System.out.println(strings.stream()
+                    .collect(Collectors.joining("\t")));
         }
     }
 
@@ -247,7 +266,7 @@ public class Solver implements ISolver {
     public void task12() {
         Scanner sc = new Scanner(System.in);
         int index = Integer.parseInt(sc.nextLine());
-        List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
+        List<List<String>> list = matrixAsStringList(sc, Integer.parseInt(sc.nextLine()));
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < list.size()-1-i; j++) {
                 if (Integer.parseInt(list.get(j).get(index)) > Integer.parseInt(list.get(j+1).get(index))) {
@@ -286,7 +305,7 @@ public class Solver implements ISolver {
     public void task13() {
         Scanner sc = new Scanner(System.in);
         int index = Integer.parseInt(sc.nextLine());
-        List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
+        List<List<String>> list = matrixAsStringList(sc, Integer.parseInt(sc.nextLine()));
 
         System.out.println(list.size());
         if (Math.abs(index%list.size()) == 0 || index == 0) {
@@ -326,7 +345,7 @@ public class Solver implements ISolver {
     @Override
     public void task15() {
         Scanner sc = new Scanner(System.in);
-        List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
+        List<List<String>> list = matrixAsStringList(sc, Integer.parseInt(sc.nextLine()));
         int sumOfElements = 0;
         for (List<String> strings : list) {
             int firstPositiveIndex = -1;
@@ -367,7 +386,7 @@ public class Solver implements ISolver {
     @Override
     public void task16() {
         Scanner sc = new Scanner(System.in);
-        List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
+        List<List<String>> list = matrixAsStringList(sc, Integer.parseInt(sc.nextLine()));
         System.out.println(list.size());
         printListMatrix(rotateMatrix(list));
     }
@@ -406,7 +425,7 @@ public class Solver implements ISolver {
     @Override
     public void task17() {
         Scanner sc = new Scanner(System.in);
-        List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
+        List<List<String>> list = matrixAsStringList(sc, Integer.parseInt(sc.nextLine()));
         System.out.println(findDet(list));
     }
 
@@ -468,7 +487,7 @@ public class Solver implements ISolver {
     @Override
     public void task19() {
         Scanner sc = new Scanner(System.in);
-        List<List<String>> list = createAndFillListMatrix(sc, Integer.parseInt(sc.nextLine()));
+        List<List<String>> list = matrixAsStringList(sc, Integer.parseInt(sc.nextLine()));
         int initialListSize = list.size();
         List<Integer> deletionRows = new ArrayList<>();
         List<Integer> deletionCols = new ArrayList<>();
@@ -506,14 +525,73 @@ public class Solver implements ISolver {
         }
 
         System.out.println(
-                (initialListSize - deletionRows.size()) + "\n"
-                        + (initialListSize - deletionCols.size())
-        );
+                (initialListSize - deletionRows.size()) + "\n" +
+                (initialListSize - deletionCols.size())
+                );
         printListMatrix(list);
+    }
+
+    @Override
+    public void task20() {
+
+    }
+
+    @Override
+    public void task21() {
+        Scanner sc = new Scanner(System.in);
+        List<List<String>> list = matrixAsStringList(sc, Integer.parseInt(sc.nextLine()));
+        List<String> zeroList = new ArrayList<>();
+        zeroList.add("0");
+        for (List<String> strings : list) {
+            int numOfZeros = 0;
+            for (String st : strings) {
+                if (st.equals("0")) {
+                    numOfZeros++;
+                }
+            }
+            if (numOfZeros>0) {
+                strings.removeAll(zeroList);
+                for (int i = 0; i < numOfZeros; i++) {
+                    strings.add("0");
+                }
+            }
+        }
+        System.out.println(list.size());
+        printListMatrix(list);
+    }
+
+    @Override
+    public void task22() {
+        Scanner sc = new Scanner(System.in);
+        List<List<Double>> list = matrixAsDoubleList(sc, Integer.parseInt(sc.nextLine()));
+        for (List<Double> doubles : list) {
+            System.out.println(doubles.stream()
+                                      .map(Math::round)
+                                      .map(Object::toString)
+                                      .collect(Collectors.joining("\t")));
+        }
+    }
+
+    @Override
+    public void task23() {
+        Scanner sc = new Scanner(System.in);
+        List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
+        int saddlePoints = 0;
+        for (List<Integer> listOfIntegers : list) {
+            final int minValueInARow = listOfIntegers.stream().min((a, b) -> a < b ? a : b).get();
+            int index = listOfIntegers.indexOf(minValueInARow);
+            for (List<Integer> innerForeachList : list) {
+                if (innerForeachList.get(index) > minValueInARow) {
+                    break;
+                }
+            }
+            saddlePoints+=1;
+        }
+        System.out.println(saddlePoints);
     }
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task19();
+        sv.task23();
     }
 }
