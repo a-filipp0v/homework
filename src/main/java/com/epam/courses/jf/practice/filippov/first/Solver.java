@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Реализация первого блока заданий.
@@ -579,7 +580,7 @@ public class Solver implements ISolver {
         List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
         int saddlePoints = 0;
         for (List<Integer> listOfIntegers : list) {
-            final int minValueInARow = listOfIntegers.stream().min((a, b) -> a <= b ? a : b).get();
+            int minValueInARow = listOfIntegers.stream().mapToInt(i -> i).min().getAsInt();
             for (int i = 0; i < list.size(); i++) {
                 boolean flag = false;
                 for (List<Integer> innerIntegers : list) {
@@ -596,6 +597,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task22();
+        sv.task23();
     }
 }
