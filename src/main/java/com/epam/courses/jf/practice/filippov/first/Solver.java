@@ -532,10 +532,60 @@ public class Solver implements ISolver {
         printListMatrix(list);
     }
 
-    @Override
-    public void task20() {
-
-    }
+//    @Override
+//    public void task20() {
+//        Scanner scanner = new Scanner(System.in);
+//        int newPosX = scanner.nextInt(); //Номер строки
+//        int newPosY = scanner.nextInt(); //Номер столбца
+//
+//        int matrixSize = scanner.nextInt();
+//        int[][] matrix = new int[matrixSize][matrixSize];
+//        for (int i = 0; i < matrixSize; i++) {
+//            for (int j = 0; j < matrixSize; j++) {
+//                matrix[i][j] = scanner.nextInt();
+//            }
+//        }
+//
+//        int min = matrix[0][0];
+//        int posY = 0;
+//        int posX = 0;
+//        for (int i = 0; i < matrixSize; i++) {
+//            for (int j = 0; j < matrixSize; j++) {
+//                if (min > matrix[i][j]) {
+//                    min = matrix[i][j];
+//                    posY = j;
+//                    posX = i;
+//                    }
+//                }
+//        }
+//
+//        int[] indexesX = new int[matrixSize];
+//        int[] indexesY = new int[matrixSize];
+//        for (int i = 0; i < matrixSize; i++) {
+//            indexesX[i] = i;
+//            indexesY[i] = i;
+//        }
+//
+//        int temp = indexesX[posX];
+//        indexesX[posX] = indexesX[newPosX];
+//        indexesX[newPosX] = temp;
+//
+//        temp = indexesY[posY];
+//        indexesY[posY] = indexesY[newPosY];
+//        indexesY[newPosY] = temp;
+//
+//        System.out.println(matrixSize);
+//        for (int i = 0; i < matrixSize; i++) {
+//            for (int j = 0; j < matrixSize; j++) {
+//                if (j == matrixSize - 1) {
+//                    System.out.print(matrix[indexesX[i]][indexesY[j]]);
+//                } else {
+//                    System.out.print(matrix[indexesX[i]][indexesY[j]] + "\t");
+//                }
+//            }
+//            System.out.println();
+//        }
+//    }
 
     @Override
     public void task21() {
@@ -594,6 +644,51 @@ public class Solver implements ISolver {
         }
         System.out.println(saddlePoints);
     }
+
+//    @Override
+//    public void task24() {
+//        int[][] matrix = readIntMatrix();
+//        int[] sum = new int[matrix.length];
+//
+//        for (int i = 0; i < matrix.length; i++) {
+//            for (int j = 0; j < matrix.length; j++) {
+//                sum[i] += matrix[i][j];
+//            }
+//        }
+//
+//        int[] indexes = new int[matrix.length];
+//        for (int i = 0; i < indexes.length; i++) {
+//            indexes[i] = i;
+//        }
+//
+//        for (int i = sum.length - 1; i > 0; i--) {
+//            for (int j = 0; j < i; j++) {
+//                if (sum[j] > sum[j + 1]) {
+//                    int t = sum[j];
+//                    sum[j] = sum[j + 1];
+//                    sum[j + 1] = t;
+//
+//                    int temp = indexes[j];
+//                    indexes[j] = indexes[j + 1];
+//                    indexes[j + 1] = temp;
+//                }
+//            }
+//        }
+//
+//        System.out.println(matrix.length);
+//        for (int i = 0; i < matrix.length; i++) {
+//            for (int j = 0; j < matrix.length; j++) {
+//                if (j == matrix.length - 1) {
+//                    System.out.print(matrix[indexes[i]][j]);
+//                } else {
+//                    System.out.print(matrix[indexes[i]][j] + "\t");
+//                }
+//            }
+//            System.out.println();
+//        }
+//    }
+
+
 
     public static void main(String[] args) {
         Solver sv = new Solver();
