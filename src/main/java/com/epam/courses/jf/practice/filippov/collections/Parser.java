@@ -1,8 +1,6 @@
 /*29.08.2017*/
 package com.epam.courses.jf.practice.filippov.collections;
 
-import javafx.scene.input.InputMethodTextRun;
-
 import java.io.*;
 import java.util.*;
 import java.util.regex.*;
@@ -10,9 +8,9 @@ import java.util.regex.*;
 public class Parser {
 
     private final String absolutePath = "./../../common/collections/";
-    private final Pattern orderPattern = Pattern.compile(".*\\{\"orderID\": (\\d+), \"customerID\": (\\d+), \"product\": \"(.+)\"}");
+    private final Pattern orderPattern = Pattern.compile(".*\\{\"orderID\": (\\d+), \"customerID\": (\\d+), \"product\": \"([а-яА-Яa-zA-Z\\d,\\-\\s/®+]*)\"}");
     private final Pattern clientPattern = Pattern.compile(".*<\\D+\"(\\d+)\" \\D+\"(\\D+)\"\\D+\"(\\D+)\"\\D+\"(\\D+)\"/>");
-    private final Pattern filePattern = Pattern.compile("(\\d+)");
+    private final Pattern jsonPattern = Pattern.compile("(\\d+)");
     private List<Client> clients = new ArrayList<>();
     private List<Order> orders = new ArrayList<>();
     private List<Integer> missOrders = new ArrayList<>();
@@ -20,8 +18,7 @@ public class Parser {
     void parseDataAndWriteToFile(String[] str) throws IOException {
         parseOrders(str);
         parseClients();
-        parseMoneySpent();
-        writeMissedOrdersToFile();
+        writeMissedOrdersToFile(missOrders);
         writeTopClientsToFile();
     }
 
@@ -45,7 +42,7 @@ public class Parser {
     private void parseOrders(String[] orderFiles) throws IOException {
         for (String s : orderFiles) {
             int argsIndex = 0;
-            Matcher argsMatcher = filePattern.matcher(s);
+            Matcher argsMatcher = jsonPattern.matcher(s);
             if (argsMatcher.find()) {
                 argsIndex = Integer.parseInt(argsMatcher.group(1));
             }
@@ -92,8 +89,8 @@ public class Parser {
         clients.sort(Comparator.reverseOrder());
     }
 
-    private <T> void writoTeFile(List<T> list) throws IOException {
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter("missedOrders"))) {
+    private <T> void writeMissedOrdersToFile(List<T> list) throws IOException {
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("missedOrders.txt"))) {
             for (T t : list) {
                 bw.write(t.toString() + "\r\n");
             }
@@ -106,17 +103,13 @@ public class Parser {
         }
     }
 
-    private void writeMissedOrdersToFile() throws IOException {
-        writoTeFile(missOrders);
-    }
-
     private void writeTopClientsToFile() throws IOException {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("topClients"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("topClients.txt"))) {
             for (int i = 0; i < 100; i++) {
                 bw.write(clients.get(i).getSurname() + " "
                            + clients.get(i).getName() + " "
                            + clients.get(i).getPatronymic() + " "
-                           + clients.get(i).getMoneySpent() + "\n");
+                           + clients.get(i).getMoneySpent() + "\r\n");
             }
         }
     }
