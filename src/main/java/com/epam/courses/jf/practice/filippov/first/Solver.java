@@ -535,41 +535,41 @@ public class Solver implements ISolver {
     @Override
     public void task20() {
         Scanner sc = new Scanner(System.in);
-        int newX = sc.nextInt();
-        int newY = sc.nextInt();
+        int col = Integer.parseInt(sc.nextLine());
+        int row = Integer.parseInt(sc.nextLine());
+        List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
+        int minRow = 0;
+        int minCol = 0;
 
-        List<List<Integer>> list = matrixAsIntegerList(sc,Integer.parseInt(sc.nextLine()));
-
-        int min = list.get(0).get(0);
-        int currentX = 0;
-        int currentY = 0;
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < list.size(); j++) {
-                if (min > list.get(i).get(j)) {
-                    min = list.get(i).get(j);
-                    currentY = j;
-                    currentX = i;
-                    }
+                if (list.get(i).get(j) < list.get(minRow).get(minCol)) {
+                    minRow = i;
+                    minCol = j;
                 }
+            }
         }
 
-        List<Integer> xIndexes = new ArrayList<>();
-        List<Integer> yIndexes = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            xIndexes.set(i, i);
-            yIndexes.set(i, i);
-        }
-
-        int temp = xIndexes.get(currentX);
-        xIndexes.set(currentX, xIndexes.get(newX));
-        xIndexes.set(newX, temp);
-
-        temp = yIndexes.get(currentY);
-        yIndexes.set(currentX, yIndexes.get(newY));
-        yIndexes.set(newY, temp);
-
+        relocate(list, row, col, minRow, minCol);
         System.out.println(list.size());
         printListMatrix(list);
+
+    }
+
+    private List<List<Integer>> relocate(List<List<Integer>> list, int row, int col, int minRow, int minCol) {
+
+        for (int i = 0; i < list.size(); i++) {
+            int tmp = list.get(row).get(i);
+            list.get(row).set(i, list.get(minRow).get(i));
+            list.get(minRow).set(i, tmp);
+        }
+        for (List<Integer> lst : list) {
+            int tmp = lst.get(col);
+            lst.set(col, lst.get(minCol));
+            lst.set(minCol, tmp);
+        }
+
+        return list;
     }
 
     @Override
@@ -772,6 +772,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task13();
+        sv.task20();
     }
 }
