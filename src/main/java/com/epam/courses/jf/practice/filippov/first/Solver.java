@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Реализация первого блока заданий.
@@ -256,9 +255,10 @@ public class Solver implements ISolver {
         }
         return list;
     }
-    private void printListMatrix(List<List<String>> list) {
-        for (List<String> strings : list) {
-            System.out.println(strings.stream()
+    private <T> void printListMatrix(List<List<T>> list) {
+        for (List<T> t : list) {
+            System.out.println(t.stream()
+                    .map(Object::toString)
                     .collect(Collectors.joining("\t")));
         }
     }
@@ -532,60 +532,45 @@ public class Solver implements ISolver {
         printListMatrix(list);
     }
 
-//    @Override
-//    public void task20() {
-//        Scanner scanner = new Scanner(System.in);
-//        int newPosX = scanner.nextInt(); //Номер строки
-//        int newPosY = scanner.nextInt(); //Номер столбца
-//
-//        int matrixSize = scanner.nextInt();
-//        int[][] matrix = new int[matrixSize][matrixSize];
-//        for (int i = 0; i < matrixSize; i++) {
-//            for (int j = 0; j < matrixSize; j++) {
-//                matrix[i][j] = scanner.nextInt();
-//            }
-//        }
-//
-//        int min = matrix[0][0];
-//        int posY = 0;
-//        int posX = 0;
-//        for (int i = 0; i < matrixSize; i++) {
-//            for (int j = 0; j < matrixSize; j++) {
-//                if (min > matrix[i][j]) {
-//                    min = matrix[i][j];
-//                    posY = j;
-//                    posX = i;
-//                    }
-//                }
-//        }
-//
-//        int[] indexesX = new int[matrixSize];
-//        int[] indexesY = new int[matrixSize];
-//        for (int i = 0; i < matrixSize; i++) {
-//            indexesX[i] = i;
-//            indexesY[i] = i;
-//        }
-//
-//        int temp = indexesX[posX];
-//        indexesX[posX] = indexesX[newPosX];
-//        indexesX[newPosX] = temp;
-//
-//        temp = indexesY[posY];
-//        indexesY[posY] = indexesY[newPosY];
-//        indexesY[newPosY] = temp;
-//
-//        System.out.println(matrixSize);
-//        for (int i = 0; i < matrixSize; i++) {
-//            for (int j = 0; j < matrixSize; j++) {
-//                if (j == matrixSize - 1) {
-//                    System.out.print(matrix[indexesX[i]][indexesY[j]]);
-//                } else {
-//                    System.out.print(matrix[indexesX[i]][indexesY[j]] + "\t");
-//                }
-//            }
-//            System.out.println();
-//        }
-//    }
+    @Override
+    public void task20() {
+        Scanner sc = new Scanner(System.in);
+        int newX = sc.nextInt();
+        int newY = sc.nextInt();
+
+        List<List<Integer>> list = matrixAsIntegerList(sc,Integer.parseInt(sc.nextLine()));
+
+        int min = list.get(0).get(0);
+        int currentX = 0;
+        int currentY = 0;
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.size(); j++) {
+                if (min > list.get(i).get(j)) {
+                    min = list.get(i).get(j);
+                    currentY = j;
+                    currentX = i;
+                    }
+                }
+        }
+
+        List<Integer> xIndexes = new ArrayList<>();
+        List<Integer> yIndexes = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            xIndexes.set(i, i);
+            yIndexes.set(i, i);
+        }
+
+        int temp = xIndexes.get(currentX);
+        xIndexes.set(currentX, xIndexes.get(newX));
+        xIndexes.set(newX, temp);
+
+        temp = yIndexes.get(currentY);
+        yIndexes.set(currentX, yIndexes.get(newY));
+        yIndexes.set(newY, temp);
+
+        System.out.println(list.size());
+        printListMatrix(list);
+    }
 
     @Override
     public void task21() {
@@ -645,53 +630,148 @@ public class Solver implements ISolver {
         System.out.println(saddlePoints);
     }
 
-//    @Override
-//    public void task24() {
-//        int[][] matrix = readIntMatrix();
-//        int[] sum = new int[matrix.length];
-//
-//        for (int i = 0; i < matrix.length; i++) {
-//            for (int j = 0; j < matrix.length; j++) {
-//                sum[i] += matrix[i][j];
-//            }
-//        }
-//
-//        int[] indexes = new int[matrix.length];
-//        for (int i = 0; i < indexes.length; i++) {
-//            indexes[i] = i;
-//        }
-//
-//        for (int i = sum.length - 1; i > 0; i--) {
-//            for (int j = 0; j < i; j++) {
-//                if (sum[j] > sum[j + 1]) {
-//                    int t = sum[j];
-//                    sum[j] = sum[j + 1];
-//                    sum[j + 1] = t;
-//
-//                    int temp = indexes[j];
-//                    indexes[j] = indexes[j + 1];
-//                    indexes[j + 1] = temp;
-//                }
-//            }
-//        }
-//
-//        System.out.println(matrix.length);
-//        for (int i = 0; i < matrix.length; i++) {
-//            for (int j = 0; j < matrix.length; j++) {
-//                if (j == matrix.length - 1) {
-//                    System.out.print(matrix[indexes[i]][j]);
-//                } else {
-//                    System.out.print(matrix[indexes[i]][j] + "\t");
-//                }
-//            }
-//            System.out.println();
-//        }
-//    }
+    @Override
+    public void task24() {
+        Scanner sc = new Scanner(System.in);
+        List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
+        List<Integer> sum = new ArrayList<>();
 
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.size(); j++) {
+                sum.set(i, (sum.get(i) + list.get(i).get(j)));
+            }
+        }
 
+        List<Integer> indexes = new ArrayList<>();
+        for (int i = 0; i < indexes.size(); i++) {
+            indexes.add(i);
+        }
+
+        for (int i = sum.size() - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (sum.get(j) > sum.get(j+1)) {
+                    int tmp = sum.get(j);
+                    sum.set(j, sum.get(j+1));
+                    sum.set(j+1, tmp);
+                    int tmp2 = indexes.get(j);
+                    indexes.set(j, indexes.get(j+1));
+                    indexes.set(j+1, tmp2);
+                }
+            }
+        }
+
+        System.out.println(list.size());
+        printListMatrix(list);
+    }
+
+    private boolean findLocalMinInMatrix(List<List<Integer>> list, int i, int j) {
+        int n = list.size();
+        int m = list.get(0).size();
+
+        ArrayList<Integer> tempList = new ArrayList<>();
+        for (int x = Math.max(i - 1, 0); x <= Math.min(i + 1, n - 1); x++) {
+            for (int y = Math.max(j - 1, 0); y <= Math.min(j + 1, m - 1); y++) {
+                if (x != i || y != j) {
+                    tempList.add(list.get(x).get(y));
+                }
+            }
+        }
+        for (Integer value : tempList) {
+            if (value <= list.get(i).get(j)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void task25() {
+        Scanner sc = new Scanner(System.in);
+        List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
+
+        int count = 0;
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.size(); j++) {
+                if (findLocalMinInMatrix(list, i, j)) {
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
+    }
+
+    private int findHighestLocalMaxInMatrix(List<List<Integer>> list, int i, int j) {
+        int n = list.size();
+        int m = list.get(0).size();
+
+        ArrayList<Integer> tempList = new ArrayList<>();
+        for (int x = Math.max(i - 1, 0); x <= Math.min(i + 1, n - 1); x++) {
+            for (int y = Math.max(j - 1, 0); y <= Math.min(j + 1, m - 1); y++) {
+                if (x != i || y != j) {
+                    tempList.add(list.get(x).get(y));
+                }
+            }
+        }
+        int max = 0;
+        for (Integer value : tempList) {
+            if (value >= list.get(i).get(j) && value >= max) {
+                max = value;
+            }
+        }
+        return max;
+    }
+
+    @Override
+    public void task26() {
+        Scanner sc = new Scanner(System.in);
+        List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
+
+        int highest = 0;
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.size(); j++) {
+                highest = findHighestLocalMaxInMatrix(list, i, j);
+            }
+        }
+
+        System.out.println(highest);
+    }
+
+    @Override
+    public void task27() {
+        Scanner sc = new Scanner(System.in);
+        List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
+        List<Integer> sum = new ArrayList<>();
+        List<Integer> indexes = new ArrayList<>();
+
+        for (int i = 0; i < indexes.size(); i++) {
+            indexes.add(i);
+        }
+
+        for (List<Integer> element : list) {
+            for (int j = 0; j < list.size(); j++) {
+                sum.set(j, sum.get(j) + Math.abs(element.get(j)));
+            }
+        }
+
+        for (int a = 1; a < sum.size(); a++) {
+            for (int b = sum.size() - 1; b >= a; b--) {
+                if (sum.get(b-1) < sum.get(b)) {
+                    int temp = sum.get(b-1);
+                    sum.set(b-1, sum.get(b));
+                    sum.set(b, temp);
+                    temp = indexes.get(b-1);
+                    indexes.set(b-1, indexes.get(b));
+                    indexes.set(b, temp);
+                }
+            }
+        }
+
+        System.out.println(list.size());
+        printListMatrix(list);
+    }
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task23();
+        sv.task13();
     }
 }
