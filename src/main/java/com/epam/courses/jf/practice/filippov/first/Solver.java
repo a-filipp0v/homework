@@ -698,6 +698,7 @@ public class Solver implements ISolver {
                 }
             }
         }
+
         int max = 0;
         for (Integer value : tempList) {
             if (value >= list.get(i).get(j) && value >= max) {
@@ -712,42 +713,31 @@ public class Solver implements ISolver {
         Scanner sc = new Scanner(System.in);
         List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
 
-        int highest = 0;
+        int highest = Integer.MIN_VALUE;
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < list.size(); j++) {
                 highest = findHighestLocalMaxInMatrix(list, i, j);
             }
         }
 
-        System.out.println(highest);
+        if (highest > Integer.MIN_VALUE) {
+            System.out.println(highest);
+        } else System.out.println("NOT FOUND");
     }
 
     @Override
     public void task27() {
         Scanner sc = new Scanner(System.in);
         List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
-        List<Integer> sum = new ArrayList<>();
-        List<Integer> indexes = new ArrayList<>();
 
-        for (int i = 0; i < indexes.size(); i++) {
-            indexes.add(i);
-        }
-
-        for (List<Integer> element : list) {
-            for (int j = 0; j < list.size(); j++) {
-                sum.set(j, sum.get(j) + Math.abs(element.get(j)));
-            }
-        }
-
-        for (int a = 1; a < sum.size(); a++) {
-            for (int b = sum.size() - 1; b >= a; b--) {
-                if (sum.get(b-1) < sum.get(b)) {
-                    int temp = sum.get(b-1);
-                    sum.set(b-1, sum.get(b));
-                    sum.set(b, temp);
-                    temp = indexes.get(b-1);
-                    indexes.set(b-1, indexes.get(b));
-                    indexes.set(b, temp);
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.size() - 1 - i; j++) {
+                if (matrixColCharacteristic(list, i) < matrixColCharacteristic(list, i+1)) {
+                    for (List<Integer> integers : list) {
+                        int temp = integers.get(i);
+                        integers.set(i, integers.get(i + 1));
+                        integers.set(i + 1, temp);
+                    }
                 }
             }
         }
@@ -756,8 +746,16 @@ public class Solver implements ISolver {
         printListMatrix(list);
     }
 
+    private int matrixColCharacteristic(List<List<Integer>> list, int col) {
+        int sum = 0;
+        for (List<Integer> integers : list) {
+            sum += Math.abs(integers.get(col));
+        }
+        return sum;
+    }
+
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task24();
+        sv.task27();
     }
 }
