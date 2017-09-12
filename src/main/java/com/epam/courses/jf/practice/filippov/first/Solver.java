@@ -535,8 +535,8 @@ public class Solver implements ISolver {
     @Override
     public void task20() {
         Scanner sc = new Scanner(System.in);
-        int col = Integer.parseInt(sc.nextLine());
         int row = Integer.parseInt(sc.nextLine());
+        int col = Integer.parseInt(sc.nextLine());
         List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
         int minRow = 0;
         int minCol = 0;
@@ -634,28 +634,14 @@ public class Solver implements ISolver {
     public void task24() {
         Scanner sc = new Scanner(System.in);
         List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
-        List<Integer> sum = new ArrayList<>();
 
-        for (int i = 0; i < list.size(); i++) {
-            for (int j = 0; j < list.size(); j++) {
-                sum.set(i, (sum.get(i) + list.get(i).get(j)));
-            }
-        }
-
-        List<Integer> indexes = new ArrayList<>();
-        for (int i = 0; i < indexes.size(); i++) {
-            indexes.add(i);
-        }
-
-        for (int i = sum.size() - 1; i > 0; i--) {
-            for (int j = 0; j < i; j++) {
-                if (sum.get(j) > sum.get(j+1)) {
-                    int tmp = sum.get(j);
-                    sum.set(j, sum.get(j+1));
-                    sum.set(j+1, tmp);
-                    int tmp2 = indexes.get(j);
-                    indexes.set(j, indexes.get(j+1));
-                    indexes.set(j+1, tmp2);
+        for (int j = 0; j < list.size(); j++) {
+            for (int i = 0; i < list.size()- 1 - j; i++) {
+                List<Integer> temp;
+                if (list.get(i).stream().mapToInt(p -> p).sum() > list.get(i+1).stream().mapToInt(p -> p).sum()) {
+                    temp = list.get(i);
+                    list.set(i, list.get(i+1));
+                    list.set(i+1, temp);
                 }
             }
         }
@@ -772,6 +758,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task20();
+        sv.task24();
     }
 }
