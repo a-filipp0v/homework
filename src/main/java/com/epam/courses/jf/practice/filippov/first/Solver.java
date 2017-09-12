@@ -686,26 +686,15 @@ public class Solver implements ISolver {
         System.out.println(count);
     }
 
-    private int findHighestLocalMaxInMatrix(List<List<Integer>> list, int i, int j) {
-        int n = list.size();
-        int m = list.get(0).size();
-
-        ArrayList<Integer> tempList = new ArrayList<>();
-        for (int x = Math.max(i - 1, 0); x <= Math.min(i + 1, n - 1); x++) {
-            for (int y = Math.max(j - 1, 0); y <= Math.min(j + 1, m - 1); y++) {
-                if (x != i || y != j) {
-                    tempList.add(list.get(x).get(y));
-                }
-            }
-        }
-
-        int max = 0;
-        for (Integer value : tempList) {
-            if (value >= list.get(i).get(j) && value >= max) {
-                max = value;
-            }
-        }
-        return max;
+    private boolean checkLocalMax(List<List<Integer>> list, int i, int j, int n) {
+        return !(i - 1 >= 0 && j - 1 >= 0 && list.get(i-1).get(j-1) >= list.get(i).get(j)
+                || j - 1 >= 0 && list.get(i).get(j - 1) >= list.get(i).get(j)
+                || i + 1 < n && j - 1 >= 0 && list.get(i + 1).get(j - 1) >= list.get(i).get(j)
+                || i - 1 >= 0 && list.get(i - 1).get(j) >= list.get(i).get(j)
+                || i + 1 < n && list.get(i + 1).get(j) >= list.get(i).get(j)
+                || i - 1 >= 0 && j + 1 < n && list.get(i - 1).get(j + 1) >= list.get(i).get(j)
+                || j + 1 < n && list.get(i).get(j + 1) >= list.get(i).get(j)
+                || i + 1 < n && j + 1 < n && list.get(i + 1).get(j + 1) >= list.get(i).get(j));
     }
 
     @Override
@@ -713,16 +702,32 @@ public class Solver implements ISolver {
         Scanner sc = new Scanner(System.in);
         List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
 
-        int highest = Integer.MIN_VALUE;
+        int lmax;
+        lmax = Integer.MIN_VALUE;
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < list.size(); j++) {
-                highest = findHighestLocalMaxInMatrix(list, i, j);
+                if (checkLocalMax(list, i, j, list.size())) {
+                    lmax = Math.max(lmax, list.get(i).get(j));
+                }
             }
         }
+        if (lmax > Integer.MIN_VALUE) {
+            System.out.println(lmax);
+        }
+        else {
+            System.out.println("NOT FOUND");
+        }
 
-        if (highest > Integer.MIN_VALUE) {
-            System.out.println(highest);
-        } else System.out.println("NOT FOUND");
+//        int highest = Integer.MIN_VALUE;
+//        for (int i = 0; i < list.size(); i++) {
+//            for (int j = 0; j < list.size(); j++) {
+//                highest = findHighestLocalMaxInMatrix(list, i, j);
+//            }
+//        }
+//
+//        if (highest == Integer.MIN_VALUE) {
+//            System.out.println("NF");
+//        } else System.out.println(highest);
     }
 
     @Override
@@ -732,11 +737,11 @@ public class Solver implements ISolver {
 
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < list.size() - 1 - i; j++) {
-                if (matrixColCharacteristic(list, i) < matrixColCharacteristic(list, i+1)) {
+                if (matrixColCharacteristic(list, j) < matrixColCharacteristic(list, j+1)) {
                     for (List<Integer> integers : list) {
-                        int temp = integers.get(i);
-                        integers.set(i, integers.get(i + 1));
-                        integers.set(i + 1, temp);
+                        int temp = integers.get(j);
+                        integers.set(j, integers.get(j + 1));
+                        integers.set(j + 1, temp);
                     }
                 }
             }
@@ -756,6 +761,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task27();
+        sv.task26();
     }
 }
