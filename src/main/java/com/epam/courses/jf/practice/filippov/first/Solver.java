@@ -455,7 +455,7 @@ public class Solver implements ISolver {
                     deleteRows.add(matrix.indexOf(list));
             }
             for (int i = 0; i < list.size(); i++) {
-                if (maxVal.equals(list.get(i))) {
+                if (maxVal!=null && maxVal.equals(list.get(i))) {
                     if (!deleteColumns.contains(i))
                     deleteColumns.add(i);
                 }
