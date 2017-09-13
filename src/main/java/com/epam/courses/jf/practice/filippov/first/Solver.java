@@ -598,7 +598,7 @@ public class Solver implements ISolver {
 
     @Override
     public void task22() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in).useLocale(Locale.FRANCE);
         List<List<Double>> list = matrixAsDoubleList(sc, Integer.parseInt(sc.nextLine()));
         System.out.println(list.size());
         for (List<Double> doubles : list) {
