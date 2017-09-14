@@ -4,6 +4,7 @@ package com.epam.courses.jf.practice.filippov.second;
 import com.epam.courses.jf.practice.common.second.ITestableTask3;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TestableTask3 implements ITestableTask3 {
 
@@ -12,12 +13,13 @@ public class TestableTask3 implements ITestableTask3 {
         List<String> sortedPoems = new ArrayList<>();
         for (IPoem poem : poems) {
             if (poem.getAuthor().equals(author)) {
-                String[] temp = poem.getLines().toArray(new String[0]);
-                Arrays.sort(temp, Comparator.comparingInt(String::length).thenComparing(String::compareTo));
-                sortedPoems.addAll(Arrays.asList(temp));
+                sortedPoems.addAll(poem.getLines());
             }
         }
-        return sortedPoems;
+
+        return sortedPoems.stream()
+                .sorted((s1, s2) -> s2.length() - s1.length())
+                .collect(Collectors.toList());
     }
 
     class Poem implements IPoem{
