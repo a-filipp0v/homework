@@ -485,50 +485,51 @@ public class Solver implements ISolver {
         }
     }
 
+    private void squeezeRowInMatrix(List<List<String>> list) {
+        Iterator<List<String>> iter = list.iterator();
+        while (iter.hasNext()) {
+            List<String> tmp = iter.next();
+            int counter = 0;
+            for (String s : tmp) {
+                if (Integer.parseInt(s) == 0) {
+                    counter++;
+                }
+            }
+            if (counter == tmp.size()) {
+                iter.remove();
+            }
+        }
+        if (list.isEmpty()) {
+            System.out.println("0");
+        } else System.out.println(list.size());
+    }
+
+    private void squeezeColInMatrix(List<List<String>> list) {
+        for (int i = list.size() - 1; i >= 0; i--) {
+            int counter = 0;
+            for (List<String> strings : list) {
+                if (Integer.parseInt(strings.get(i)) == 0) {
+                    counter++;
+                } else break;
+            }
+            if (counter == list.size()) {
+                for (List<String> aList : list) {
+                    aList.remove(i);
+                }
+            }
+        }
+        if (list.isEmpty()) {
+            System.out.println("0");
+        } else System.out.println(list.get(0).size());
+    }
+
     @Override
     public void task19() {
         Scanner sc = new Scanner(System.in);
         List<List<String>> list = matrixAsStringList(sc, Integer.parseInt(sc.nextLine()));
-        int initialListSize = list.size();
-        List<Integer> deletionRows = new ArrayList<>();
-        List<Integer> deletionCols = new ArrayList<>();
-        for (List<String> strs : list) {
-            int temp = 0;
-            for (String s : strs) {
-                if (Integer.parseInt(s) == 0) {
-                    temp++;
-                }
-            }
-            if (strs.size() == temp) {
-                deletionRows.add(list.indexOf(strs));
-            }
-        }
-        for (int i = 0; i < list.size(); i++) {
-            int temp = 0;
-            for (List<String> ls : list) {
-                if (Integer.parseInt(ls.get(i)) == 0) {
-                    temp++;
-                }
-            }
-            if (list.size() == temp) {
-                deletionCols.add(i);
-            }
-        }
-        deletionCols.sort(Comparator.reverseOrder());
-        deletionRows.sort(Comparator.reverseOrder());
-        for (int index : deletionRows) {
-            list.remove(index);
-        }
-        for (List<String> strs : list) {
-            for (int index : deletionCols) {
-                strs.remove(index);
-            }
-        }
+        squeezeRowInMatrix(list);
+        squeezeColInMatrix(list);
 
-        System.out.println(
-                (initialListSize - deletionRows.size()) + "\n" +
-                (initialListSize - deletionCols.size())
-                );
         printListMatrix(list);
     }
 
@@ -717,17 +718,6 @@ public class Solver implements ISolver {
         else {
             System.out.println("NOT FOUND");
         }
-
-//        int highest = Integer.MIN_VALUE;
-//        for (int i = 0; i < list.size(); i++) {
-//            for (int j = 0; j < list.size(); j++) {
-//                highest = findHighestLocalMaxInMatrix(list, i, j);
-//            }
-//        }
-//
-//        if (highest == Integer.MIN_VALUE) {
-//            System.out.println("NF");
-//        } else System.out.println(highest);
     }
 
     @Override
@@ -761,6 +751,6 @@ public class Solver implements ISolver {
 
     public static void main(String[] args) {
         Solver sv = new Solver();
-        sv.task26();
+        sv.task19();
     }
 }
