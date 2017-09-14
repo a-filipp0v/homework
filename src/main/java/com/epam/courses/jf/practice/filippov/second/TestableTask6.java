@@ -16,12 +16,20 @@ public class TestableTask6 implements ITestableTask6{
         if (first.entrySet().size() < second.entrySet().size()) {
             result = new HashMap<>(second);
             for (Map.Entry<Integer, Integer> firstEntry : first.entrySet()) {
-                result.put(firstEntry.getKey(), result.get(firstEntry.getKey()) + firstEntry.getValue());
+                try {
+                    result.put(firstEntry.getKey(), result.get(firstEntry.getKey()) + firstEntry.getValue());
+                } catch (NullPointerException e) {
+                    result.put(firstEntry.getKey(), firstEntry.getValue());
+                }
             }
         } else {
             result = new HashMap<>(first);
             for (Map.Entry<Integer, Integer> secondEntry : second.entrySet()) {
-                result.put(secondEntry.getKey(), result.get(secondEntry.getKey()) + secondEntry.getValue());
+                try {
+                    result.put(secondEntry.getKey(), result.get(secondEntry.getKey()) + secondEntry.getValue());
+                } catch (NullPointerException e) {
+                    result.put(secondEntry.getKey(), secondEntry.getValue());
+                }
             }
         }
         return result;
