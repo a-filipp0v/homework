@@ -11,18 +11,21 @@ public class TaskStorage implements ITaskStorage{
     @Override
     public <T extends ITestableTask> T getSolver(Class<T> taskInterface) {
         String number = taskInterface.toString();
-        Pattern pattern = Pattern.compile(".*Task(\\d+)$");
+        Pattern pattern = Pattern.compile(".*(Task\\d+)$");
         Matcher matcher = pattern.matcher(number);
-        StringBuilder result = new StringBuilder().append("Task").append(matcher.group(1));
-        TestableTask res = null;
-        try {
-            res = (TestableTask) Class.forName(result.toString()).newInstance();
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
+        Boolean match = matcher.matches();
+        if (match) {
+            String result = "com.epam.courses.jf.practice.filippov.second." + matcher.group(1);
+            ITestableTask res = null;
+            try {
+                res = (ITestableTask) Class.forName(result).newInstance();
+            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                e.printStackTrace();
+            }
+            return (T) res;
+        } else{
+            System.out.println("err");
+            return null;
         }
-        return (T) res;
-    }
-
-    interface TestableTask extends ITestableTask {
     }
 }
