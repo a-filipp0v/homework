@@ -13,8 +13,7 @@ public class TaskStorage implements ITaskStorage{
         String number = taskInterface.toString();
         Pattern pattern = Pattern.compile(".*(TestableTask\\d+)$");
         Matcher matcher = pattern.matcher(number);
-        Boolean match = matcher.matches();
-        if (match) {
+        if (matcher.matches()) {
             String result = "com.epam.courses.jf.practice.filippov.second." + matcher.group(1);
             ITestableTask res = null;
             try {
@@ -23,7 +22,7 @@ public class TaskStorage implements ITaskStorage{
                 e.printStackTrace();
             }
             return (T) res;
-        } else{
+        } else {
             System.out.println("err");
             return null;
         }
