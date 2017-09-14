@@ -18,7 +18,7 @@ public class TestableTask3 implements ITestableTask3 {
         }
 
         return sortedPoems.stream()
-                .sorted((s1, s2) -> s2.length() - s1.length())
+                .sorted(Comparator.comparingInt(String::length))
                 .collect(Collectors.toList());
     }
 
