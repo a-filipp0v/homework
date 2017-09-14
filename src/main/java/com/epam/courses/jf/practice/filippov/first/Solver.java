@@ -485,25 +485,6 @@ public class Solver implements ISolver {
         }
     }
 
-    private void squeezeRowInMatrix(List<List<String>> list) {
-        Iterator<List<String>> iter = list.iterator();
-        while (iter.hasNext()) {
-            List<String> tmp = iter.next();
-            int counter = 0;
-            for (String s : tmp) {
-                if (Integer.parseInt(s) == 0) {
-                    counter++;
-                }
-            }
-            if (counter == tmp.size()) {
-                iter.remove();
-            }
-        }
-        if (list.isEmpty()) {
-            System.out.println("0");
-        } else System.out.println(list.size());
-    }
-
     private void squeezeColInMatrix(List<List<String>> list) {
         for (int i = list.size() - 1; i >= 0; i--) {
             int counter = 0;
@@ -518,18 +499,37 @@ public class Solver implements ISolver {
                 }
             }
         }
-        if (list.isEmpty()) {
-            System.out.println("0");
-        } else System.out.println(list.get(0).size());
+    }
+
+    private void squeezeRowInMatrix(List<List<String>> list) {
+        Iterator<List<String>> iter = list.iterator();
+        while (iter.hasNext()) {
+            List<String> tmp = iter.next();
+            int counter = 0;
+            for (String s : tmp) {
+                if (Integer.parseInt(s) == 0) {
+                    counter++;
+                }
+            }
+            if (counter == tmp.size()) {
+                iter.remove();
+            }
+        }
     }
 
     @Override
     public void task19() {
         Scanner sc = new Scanner(System.in);
         List<List<String>> list = matrixAsStringList(sc, Integer.parseInt(sc.nextLine()));
-        squeezeRowInMatrix(list);
         squeezeColInMatrix(list);
-
+        squeezeRowInMatrix(list);
+        if (list.isEmpty()) {
+            System.out.println("0");
+            System.out.println("0");
+        } else  {
+            System.out.println(list.size());
+            System.out.println(list.get(0).size());
+        }
         printListMatrix(list);
     }
 
@@ -616,7 +616,11 @@ public class Solver implements ISolver {
         List<List<Integer>> list = matrixAsIntegerList(sc, Integer.parseInt(sc.nextLine()));
         int saddlePoints = 0;
         for (List<Integer> listOfIntegers : list) {
-            int minValueInARow = listOfIntegers.stream().mapToInt(i -> i).min().getAsInt();
+            int minValueInARow = 0;
+            OptionalInt opt = listOfIntegers.stream().mapToInt(i -> i).min();
+            if (opt.isPresent()) {
+                minValueInARow = opt.getAsInt();
+            }
             for (int i = 0; i < list.size(); i++) {
                 boolean flag = false;
                 for (List<Integer> innerIntegers : list) {
