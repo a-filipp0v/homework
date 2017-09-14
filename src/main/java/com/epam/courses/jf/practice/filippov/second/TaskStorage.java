@@ -11,7 +11,7 @@ public class TaskStorage implements ITaskStorage{
     @Override
     public <T extends ITestableTask> T getSolver(Class<T> taskInterface) {
         String number = taskInterface.toString();
-        Pattern pattern = Pattern.compile(".*(Task\\d+)$");
+        Pattern pattern = Pattern.compile(".*(TestableTask\\d+)$");
         Matcher matcher = pattern.matcher(number);
         Boolean match = matcher.matches();
         if (match) {
