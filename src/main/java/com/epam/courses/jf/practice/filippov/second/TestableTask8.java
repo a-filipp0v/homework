@@ -27,7 +27,7 @@ public class TestableTask8 implements ITestableTask8 {
                     if (stack.size() > 0 && stack.pop() == '[') break;
                     else return false;
                 default:
-                    return false;
+                    break;
             }
         }
         return stack.size()==0;
