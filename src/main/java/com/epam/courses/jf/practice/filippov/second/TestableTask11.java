@@ -39,13 +39,3 @@ public class TestableTask11 implements ITestableTask11 {
         return peoples.get(0);
     }
 }
-//class Test {
-//    public static void main(String[] args) {
-//        TestableTask11 tt = new TestableTask11();
-//        ArrayList<String> ls = new ArrayList<>();
-//        for (int i = 1; i <= 13; i++) {
-//            ls.add(i+"");
-//        }
-//        System.out.println(tt.emulate(ls));
-//    }
-//}
