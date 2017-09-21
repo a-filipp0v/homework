@@ -3,6 +3,7 @@ package com.epam.courses.jf.practice.filippov.second;
 
 import com.epam.courses.jf.practice.common.second.I2DPoint;
 import com.epam.courses.jf.practice.common.second.ITestableTask15;
+import lombok.Data;
 
 import java.io.File;
 import java.util.*;
@@ -42,7 +43,7 @@ public class TestableTask15 implements ITestableTask15 {
             }
         };
     }
-
+    @Data
     class Line implements ILine {
 
         private Set<I2DPoint> points;
@@ -58,27 +59,11 @@ public class TestableTask15 implements ITestableTask15 {
         }
 
         @Override
-        public Set<I2DPoint> getPoints() {
-            return points;
-        }
-
-        @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Line line = (Line) o;
             return Double.compare(line.angle, angle) == 0 && Double.compare(line.shift, shift) == 0;
-        }
-
-        @Override
-        public int hashCode() {
-            int result;
-            long temp;
-            temp = Double.doubleToLongBits(angle);
-            result = (int) (temp ^ (temp >>> 32));
-            temp = Double.doubleToLongBits(shift);
-            result = 31 * result + (int) (temp ^ (temp >>> 32));
-            return result;
         }
     }
 }

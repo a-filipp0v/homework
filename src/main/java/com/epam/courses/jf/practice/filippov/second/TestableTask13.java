@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TestableTask13 implements ITestableTask13 {
+
     @Override
     public ITestableTask13.AbstractGraph createGraph(int numberNodes) {
         return new Graph(numberNodes);

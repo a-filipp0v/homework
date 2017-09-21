@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class TestableTask10 implements ITestableTask10 {
+
     @Override
     public HashMap<String, Integer> countNumberWords(File input) {
         HashMap<String, Integer> map = new HashMap<>();

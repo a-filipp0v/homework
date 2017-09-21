@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class TestableTask12 implements ITestableTask12 {
+
     @Override
     public List<Integer> transform(List<Integer> integers, int value) {
         integers.sort(Comparator.naturalOrder());

@@ -47,6 +47,7 @@ public class TestableTask16 implements ITestableTask16 {
         }
 
         return new IFileWithPoints() {
+
             @Override
             public File getFile() {
                 return output;

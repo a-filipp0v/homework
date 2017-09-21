@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 public class TestableTask9 implements ITestableTask9 {
+
     @Override
     public HashSet<String> getUniqueWords(File input) {
         HashSet<String> set = new HashSet<>();

@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 
 public class TestableTask14 implements ITestableTask14 {
+
     @Override
     public <T extends Number> INumberCollection<T> createCollection(Class<T> required) {
         return new NumberCollection<>();

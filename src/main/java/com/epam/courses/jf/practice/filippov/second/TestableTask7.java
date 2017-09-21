@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TestableTask7 implements ITestableTask7 {
+
     @Override
     public List<Integer> multiplyPolynomials(List<Integer> first, List<Integer> second) {
         int degFirst = first.size();
