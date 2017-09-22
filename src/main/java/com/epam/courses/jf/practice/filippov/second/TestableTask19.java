@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TestableTask19fromLaptop implements ITestableTask19 {
+public class TestableTask19 implements ITestableTask19 {
 
     @Override
     public int getNumberOvertaking(Set<ICar> cars, long lengthLap, int numberLaps) {
@@ -23,7 +23,12 @@ public class TestableTask19fromLaptop implements ITestableTask19 {
             System.out.println(lapPosition);
             for (Car car : lapPosition) {
                 car.setCurrentPosition(car.getCurrentPosition() + car.getSpeed());
-
+                if (car.getCurrentPosition() >= lengthLap) {
+                    car.setLaps((int) (car.getLaps() + car.getCurrentPosition() / lengthLap));
+                    car.setCurrentPosition(car.getCurrentPosition() % lengthLap);
+                    if (car.getLaps() != numberLaps)
+                        nextLapCounter++;
+                }
             }
             counter -= nextLapCounter * (lapPosition.size() - nextLapCounter);
             nextLapCounter = 0;
