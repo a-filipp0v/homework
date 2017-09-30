@@ -13,7 +13,8 @@ public class TestableTask19 implements ITestableTask19 {
     public int getNumberOvertaking(Set<ICar> cars, long lengthLap, int numberLaps) {
         int counter = 0;
         int nextLapCounter = 0;
-        ArrayList<Car> lapPosition = cars.stream().map(car -> new Car(car.getStartPosition(), car.getSpeed())).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Car> lapPosition = cars.stream().map(car -> new Car(car.getStartPosition(), car.getSpeed()))
+                                                  .collect(Collectors.toCollection(ArrayList::new));
         Collections.sort(lapPosition);
         for (int i = 0; i < lapPosition.size(); i++) {
             lapPosition.get(i).setRacePosition(i);
